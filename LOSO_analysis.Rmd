@@ -1,16 +1,8 @@
----
-title: "LOSO_analysis"
-author: "Carmen"
-date: "2025-05-23"
-output: html_document
----
-
 ```{r}
 library(dplyr)
 library(ggplot2)
 library(stats)
 ```
-
 
 ```{r Define working directories}
 dcode_dir <- "C:/Users/Usuario/Desktop/Practicas/AAA_80clinical/Train_Test/LOSO/dcode"
@@ -22,7 +14,6 @@ if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
 ```
-
 
 ```{r List dcode files}
 dcode_files <- list.files(dcode_dir, pattern = "^dcode_.*\\.csv$", full.names = TRUE)
@@ -81,7 +72,6 @@ for (file in dcode_files) {
   cat("Saved t-values to:", output_file, "\n")
 }
 ```
-
 
 ```{r Combine t-values}
 # Read sulcus order from a reference t-value file (e.g., from the main dataset)
