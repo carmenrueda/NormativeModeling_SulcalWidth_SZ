@@ -1550,6 +1550,8 @@ def normative_model(X_train, y_train, out_dir, X_test=None, y_test=None, warp=No
 
 """# **Run normative model**"""
 
+# PREPARE TRAINING DATA
+
 # Read 90% split of controls from non-clinical datasets
 sanos_90 = pd.read_csv('/content/drive/MyDrive/Carmen_Rueda/Width_Thickness_Adjusted/80clinical/Splits/controls_split_90_filtered.csv', header=0)
 
@@ -1560,7 +1562,7 @@ sanos_clinicas_80 = pd.read_csv('/content/drive/MyDrive/Carmen_Rueda/Width_Thick
 train_data = pd.concat([sanos_90, sanos_clinicas_20])
 train_data.to_csv('/content/drive/MyDrive/final/train_data.csv', index=False)
 
-# ---- Prepare training covariates (X) ----
+# Prepare training covariates (X)
 # Select columns for covariates: age, sex, scanner ID, and Euler number
 train = train_data.loc[:, ['age', 'sex', 'scanner', 'euler_med']]
 
@@ -1576,12 +1578,12 @@ train.drop('scanner', axis=1, inplace=True)
 # Save the covariates to CSV
 train.to_csv('/content/drive/MyDrive/final/X_train.csv', index=False)
 
-# ---- Prepare training features (y) ----
+# Prepare training features (y) 
 # Select the sulcal feature columns (from column 9 onward)
 train_feat = train_data.iloc[:, 9:]
 train_feat.to_csv('/content/drive/MyDrive/final/y_train.csv', index=False)
 
-# ---- Prepare testing data ----
+# PREPARE TESTING DATA
 
 # Read 10% split of controls from non-clinical datasets
 sanos_10 = pd.read_csv('/content/drive/MyDrive/Carmen_Rueda/Width_Thickness_Adjusted/80clinical/Splits/controls_split_10_filtered.csv', header=0)
@@ -1596,14 +1598,14 @@ pac_clinicas = pd.read_csv('/content/drive/MyDrive/Carmen_Rueda/Width_Thickness_
 test_data = pd.concat([sanos_10, sanos_clinicas_20, pac_clinicas])
 test_data.to_csv('/content/drive/MyDrive/final/test_data.csv', index=False)
 
-# ---- Prepare testing covariates (X) ----
+# Prepare testing covariates (X) 
 test = test_data.loc[:, ['age', 'sex', 'scanner', 'euler_med']]
 dummies = pd.get_dummies(test['scanner'], prefix='scanner')
 test = pd.concat([test, dummies], axis=1)
 test.drop('scanner', axis=1, inplace=True)
 test.to_csv('/content/drive/MyDrive/final/X_test.csv', index=False)
 
-# ---- Prepare testing features (y) ----
+# Prepare testing features (y) 
 test_feat = test_data.iloc[:, 9:]
 test_feat.to_csv('/content/drive/MyDrive/final/y_test.csv', index=False)
 
